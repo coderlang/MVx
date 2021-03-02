@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtInput, AtButton} from 'taro-ui'
 
-import "taro-ui/dist/style/index.scss"
 import './edit-userinfo.scss'
 
 interface Props {
