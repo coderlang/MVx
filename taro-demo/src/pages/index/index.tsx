@@ -9,7 +9,6 @@ import {TheApp} from "../../TheApp";
 import {GetUserInfoModelItem, UserInfoModelEvent} from "../../model/UserInfoModel";
 
 interface Props {
-  name:string;
 }
 
 interface State {
