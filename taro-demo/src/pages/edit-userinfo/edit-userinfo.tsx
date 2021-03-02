@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtInput, AtButton} from 'taro-ui'
+import Taro from '@tarojs/taro'
+import {Async} from 'utils';
 
 import './edit-userinfo.scss'
+import {TheApp} from "../../TheApp";
+import {GetUserInfoModelItem, UserInfoModel, UserInfoModelEvent, UserInfoModelItem} from "../../model/UserInfoModel";
 
 interface Props {
 }
@@ -19,19 +23,29 @@ export default class Index extends Component<Props, State> {
     };
   }
 
-  componentWillMount () {
+  componentDidMount(): void {
+    TheApp.plugin().nc().register(this, UserInfoModelEvent, async (e) => {
+      await this.loadFromCache();
+    });
+
+    Async(async ()=> {
+      await this.loadFromCache();
+    });
   }
 
-  componentDidMount () {
-
+  componentWillUnmount(): void {
+    TheApp.plugin().nc().unRegisterAll(this);
   }
 
-  componentWillUnmount () {
+  async loadFromCache():Promise<void> {
+    let item = await GetUserInfoModelItem(await TheApp.me());
+    if (!item) {
+      console.error("item is null");
+      return ;
+    }
+
+    this.setState({name:item.name});
   }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   //https://taro-ui.jd.com/#/docs/input
   changeName(value) {
@@ -43,6 +57,14 @@ export default class Index extends Component<Props, State> {
     return value;
   }
   save() {
+    Async(async ()=> {
+      let item = new UserInfoModelItem();
+      item.uid = await TheApp.me();
+      item.name = this.state.name;
+      let model = await TheApp.getModel(UserInfoModel);
+      await model.set([item]);
+      await Taro.navigateBack({});
+    })
   }
   render () {
     return (

@@ -1,11 +1,6 @@
 import {DetailModelItem, DetailModelEvent, TheDetailModel} from "foundation";
 import {DefaultConstructor} from "utils";
-
-export enum UserCustom {
-  BigName = 0x01,
-  Corp = 0x02,
-  Oper = 0x04,
-}
+import {TheApp} from "../TheApp";
 
 export class UserInfoModelItem extends DetailModelItem{
   public uid:string|null=null;
@@ -32,3 +27,13 @@ export class UserInfoModel extends TheDetailModel {
     return "UserInfo";
   }
 }
+
+export async function GetUserInfoModelItem(id:string): Promise<UserInfoModelItem|null> {
+  let item = (await (await TheApp.getModel(UserInfoModel)).get([id], UserInfoModelItem)).get(id);
+  if (!item || item.isInvalid()) {
+    return null;
+  }
+
+  return item;
+}
+

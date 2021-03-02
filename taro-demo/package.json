@@ -45,7 +45,7 @@
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
     "taro-ui": "^3.0.0-alpha.3",
-    "foundation": "git+https://github.com/coderlang/foundation.git#b7730448efe6151a46ec9b3be77be89fe8798570"
+    "foundation": "git+https://github.com/coderlang/foundation.git#master"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

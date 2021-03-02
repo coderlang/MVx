@@ -1,9 +1,9 @@
 import {ListModel, Me, Plugin} from "foundation";
 import {Model, ModelClazz} from "foundation/src/model/Model";
 
-export class LiaoRan {
+export class TheApp {
   private static registered:boolean = false;
-  private static pluginName_:string = "LiaoRan";
+  private static pluginName_:string = "TheApp";
 
   public static plugin():Plugin {
     if (this.registered) {
@@ -19,14 +19,15 @@ export class LiaoRan {
   }
 
   public static async getModel<T extends Model>(modelClazz: ModelClazz<T>): Promise<T> {
-    return (await LiaoRan.plugin().mf().getModel(modelClazz))
+    return (await TheApp.plugin().mf().getModel(modelClazz))
   }
 
   public static async me(): Promise<string> {
-    return (await (await LiaoRan.plugin().mf().getModel(Me)).uid())
+    // return (await (await TheApp.plugin().mf().getModel(Me)).uid())
+    return "demo";
   }
 
   public static async listModel(): Promise<ListModel> {
-    return (await LiaoRan.plugin().mf().getModel(ListModel))
+    return (await TheApp.plugin().mf().getModel(ListModel))
   }
 }
